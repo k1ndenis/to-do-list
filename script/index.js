@@ -66,6 +66,7 @@ function addTaskFn() {
 }
 
 clearBtn.addEventListener('click', () => {
+  if (tasks.length === 0) return;
   const conf = confirm('Подтвердите действие');
   if (conf) tasks.length = 0;
   saveTasks();
