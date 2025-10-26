@@ -24,6 +24,7 @@ function renderTasks() {
   taskList.innerHTML = "";
   tasks.forEach((task, index) => {
     const li = document.createElement("li");
+    li.classList.add("task-item");
     const span = document.createElement("span");
     span.textContent = task.text;
     if (task.done) {
@@ -34,7 +35,12 @@ function renderTasks() {
     deleteBtn.textContent = "x";
     deleteBtn.classList.add("delete-btn");
     deleteBtn.dataset.index = index;
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "✎";
+    editBtn.classList.add("edit-btn");
+    editBtn.dataset.index = index;
     li.appendChild(span);
+    li.appendChild(editBtn);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
     taskList.appendChild(sort);
@@ -57,6 +63,10 @@ taskList.addEventListener("click", (e) => {
     saveTasks();
     renderTasks();
   }
+  if (e.target.classList.contains("edit-btn")) {
+    const index = e.target.dataset.index;
+    startEditing(index);
+  }
 });
 
 taskInput.addEventListener("keydown", function (e) {
@@ -74,6 +84,29 @@ function addTaskFn() {
   taskInput.value = "";
   taskInput.focus();
   setTimeout(() => taskInput.blur(), 5000);
+}
+
+function startEditing(index) {
+  const li = taskList.children[index];
+  const task = tasks[index];
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = task.text;
+  input.classList.add("edit-input");
+  const span = li.querySelector("span");
+  li.replaceChild(input, span);
+  input.focus();
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") finishEditing(index, input.value);
+  });
+  input.addEventListener("blur", () => finishEditing(index, input.value));
+}
+
+function finishEditing(index, newText) {
+  if (newText.trim() === "") return;
+  tasks[index].text = newText.trim();
+  saveTasks();
+  renderTasks();
 }
 
 clearBtn.addEventListener("click", () => {

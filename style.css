@@ -1,23 +1,60 @@
 li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  padding: 8px 12px;
-  margin: 4px 0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 8px 12px;
+    margin: 4px 0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .done {
-  text-decoration: line-through;
-  color: gray;
+    text-decoration: line-through;
+    color: gray;
 }
 
 .delete-btn {
-  background: none;
-  border: none;
-  color: crimson;
-  font-size: 1.2em;
-  cursor: pointer;
+    background: none;
+    border: none;
+    color: crimson;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.edit-input {
+    font-size: 1rem;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80%;
+}
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px; /* ← 12px слева и справа */
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.task-item span {
+    flex: 1;
+    text-align: left;
+}
+
+.task-item button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 4px;
+    transition: transform 0.1s ease;
+}
+
+.task-item button:hover {
+    transform: scale(1.2);
 }
