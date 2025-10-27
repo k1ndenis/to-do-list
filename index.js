@@ -4,10 +4,10 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 const clearBtn = document.getElementById("clearBtn");
 
-const sort = document.createElement("button");
-sort.textContent = "Сортировать";
+const sortBtn = document.createElement("button");
+sortBtn.textContent = "Сортировать";
 let sortAscending = true;
-sort.addEventListener("click", () => {
+sortBtn.addEventListener("click", () => {
   if (sortAscending) {
     tasks.sort((a, b) => a.done - b.done);
   } else tasks.sort((a, b) => b.done - a.done);
@@ -27,9 +27,7 @@ function renderTasks() {
     li.classList.add("task-item");
     const span = document.createElement("span");
     span.textContent = task.text;
-    if (task.done) {
-      span.classList.add("done");
-    }
+    if (task.done) span.classList.add("done");
     span.dataset.index = index;
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "x";
@@ -43,7 +41,7 @@ function renderTasks() {
     li.appendChild(editBtn);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
-    taskList.appendChild(sort);
+    taskList.appendChild(sortBtn);
   });
 }
 
@@ -64,19 +62,18 @@ taskList.addEventListener("click", (e) => {
     renderTasks();
   }
   if (e.target.classList.contains("edit-btn")) {
-    const index = e.target.dataset.index;
     startEditing(index);
   }
 });
 
-taskInput.addEventListener("keydown", function (e) {
+taskInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") addTaskFn();
 });
 
 addTaskBtn.addEventListener("click", () => addTaskFn());
 
 function addTaskFn() {
-  const text = taskInput.value;
+  const text = taskInput.value.trim();
   if (!text) return;
   tasks.push({ text, done: false });
   saveTasks();
