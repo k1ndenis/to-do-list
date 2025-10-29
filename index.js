@@ -4,8 +4,19 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 const clearBtn = document.getElementById("clearBtn");
 
-const sortBtn = document.createElement("button");
-sortBtn.textContent = "Сортировать";
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function createButton(text, className, dataIndex) {
+  const button = document.createElement("button");
+  button.textContent = text;
+  button.classList.add(className);
+  if (dataIndex !== undefined) button.dataset.index = dataIndex;
+  return button;
+}
+
+const sortBtn = createButton("Сортировать");
 let sortAscending = true;
 sortBtn.addEventListener("click", () => {
   if (sortAscending) {
@@ -16,10 +27,6 @@ sortBtn.addEventListener("click", () => {
   renderTasks();
 });
 
-function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
 function renderTasks() {
   taskList.innerHTML = "";
   tasks.forEach((task, index) => {
@@ -29,14 +36,8 @@ function renderTasks() {
     span.textContent = task.text;
     if (task.done) span.classList.add("done");
     span.dataset.index = index;
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.dataset.index = index;
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "✎";
-    editBtn.classList.add("edit-btn");
-    editBtn.dataset.index = index;
+    const deleteBtn = createButton("x", "delete-btn", index);
+    const editBtn = createButton("✎", "edit-btn", index);
     li.appendChild(span);
     li.appendChild(editBtn);
     li.appendChild(deleteBtn);
