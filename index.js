@@ -5,7 +5,11 @@ const taskList = document.getElementById("taskList");
 const clearBtn = document.getElementById("clearBtn");
 
 function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  try {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  } catch (e) {
+    console.error("Ошибка при сохранении данных:", e);
+  }
 }
 
 function createButton(text, className, dataIndex) {
